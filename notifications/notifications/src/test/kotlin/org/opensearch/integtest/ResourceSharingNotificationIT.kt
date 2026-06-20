@@ -33,20 +33,20 @@ class ResourceSharingNotificationIT : PluginRestTestCase() {
     }
 
     private val aliceUser = "rs_alice"
-    private val alicePassword = "Rs_alice123!"
+    private val alicePassword = "TopSecret_1234%Alice"
     private val bobUser = "rs_bob"
-    private val bobPassword = "Rs_bob1234!"
+    private val bobPassword = "TopSecret_1234%Bobby"
     private var aliceClient: RestClient? = null
     private var bobClient: RestClient? = null
 
     @Before
     fun setupUsers() {
         if (aliceClient != null) return
-        createUserWithRoles(aliceUser, alicePassword, "alerting_full_access", "engineering")
+        createUserWithRoles(aliceUser, alicePassword, ALL_ACCESS_ROLE, "engineering")
         aliceClient = SecureRestClientBuilder(clusterHosts.toTypedArray(), isHttps(), aliceUser, alicePassword)
             .setSocketTimeout(60000).build()
 
-        createUserWithRoles(bobUser, bobPassword, "alerting_full_access", "marketing")
+        createUserWithRoles(bobUser, bobPassword, ALL_ACCESS_ROLE, "marketing")
         bobClient = SecureRestClientBuilder(clusterHosts.toTypedArray(), isHttps(), bobUser, bobPassword)
             .setSocketTimeout(60000).build()
     }

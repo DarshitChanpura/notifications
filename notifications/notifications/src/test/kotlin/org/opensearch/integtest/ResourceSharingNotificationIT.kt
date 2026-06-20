@@ -42,11 +42,13 @@ class ResourceSharingNotificationIT : PluginRestTestCase() {
     @Before
     fun setupUsers() {
         if (aliceClient != null) return
-        createUserWithRoles(aliceUser, alicePassword, ALL_ACCESS_ROLE, "engineering")
+        createUser(aliceUser, alicePassword, arrayOf("engineering"))
+        createUserRolesMapping(ALL_ACCESS_ROLE, arrayOf(aliceUser))
         aliceClient = SecureRestClientBuilder(clusterHosts.toTypedArray(), isHttps(), aliceUser, alicePassword)
             .setSocketTimeout(60000).build()
 
-        createUserWithRoles(bobUser, bobPassword, ALL_ACCESS_ROLE, "marketing")
+        createUser(bobUser, bobPassword, arrayOf("marketing"))
+        createUserRolesMapping(ALL_ACCESS_ROLE, arrayOf(bobUser))
         bobClient = SecureRestClientBuilder(clusterHosts.toTypedArray(), isHttps(), bobUser, bobPassword)
             .setSocketTimeout(60000).build()
     }

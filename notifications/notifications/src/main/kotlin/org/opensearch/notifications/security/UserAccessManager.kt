@@ -18,7 +18,8 @@ internal object UserAccessManager : UserAccess {
     const val ADMIN_ROLE = "all_access"
 
     private fun isResourceSharingEnabled(): Boolean {
-        return ResourceSharingClientAccessor.getResourceSharingClient() != null
+        val client = ResourceSharingClientAccessor.getResourceSharingClient()
+        return client != null && client.isFeatureEnabledForType("notification_config")
     }
 
     /**
